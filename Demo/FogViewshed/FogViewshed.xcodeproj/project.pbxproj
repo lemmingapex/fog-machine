@@ -11,11 +11,10 @@
 		9C087DEA9387C323CF6DAE62 /* Pods_FogViewshed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23ACD3D789C87F8790B278E1 /* Pods_FogViewshed.framework */; };
 		E314F6C81B79023D005B75C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E314F6C61B79023D005B75C6 /* Main.storyboard */; };
 		E314F6CA1B79023D005B75C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E314F6C91B79023D005B75C6 /* Images.xcassets */; };
-		E314F6CD1B79023D005B75C6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = E314F6CB1B79023D005B75C6 /* LaunchScreen.xib */; };
 		E314F6D91B79023D005B75C6 /* FogViewshedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E314F6D81B79023D005B75C6 /* FogViewshedTests.swift */; };
+		F913E2571D1869F30012A431 /* Pods_FogMachine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F913E2561D1869F30012A431 /* Pods_FogMachine.framework */; };
 		F91D46E01CEA9AED00AB483E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D46DE1CEA9AED00AB483E /* AppDelegate.swift */; };
 		F91D46E11CEA9AED00AB483E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D46DF1CEA9AED00AB483E /* Constants.swift */; };
-		F91D47311CEA9AFD00AB483E /* ConnectionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D46E31CEA9AFD00AB483E /* ConnectionsViewController.swift */; };
 		F91D47321CEA9AFD00AB483E /* DataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D46E41CEA9AFD00AB483E /* DataViewController.swift */; };
 		F91D47331CEA9AFD00AB483E /* ObserverSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D46E51CEA9AFD00AB483E /* ObserverSettingsViewController.swift */; };
 		F91D47341CEA9AFD00AB483E /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D46E61CEA9AFD00AB483E /* SettingsViewController.swift */; };
@@ -63,10 +62,10 @@
 		F91D475E1CEA9AFD00AB483E /* ViewshedTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47191CEA9AFD00AB483E /* ViewshedTool.swift */; };
 		F91D475F1CEA9AFD00AB483E /* ViewshedWork.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D471A1CEA9AFD00AB483E /* ViewshedWork.swift */; };
 		F91D47601CEA9AFD00AB483E /* FranklinRayViewshed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D471C1CEA9AFD00AB483E /* FranklinRayViewshed.swift */; };
-		F91D47611CEA9AFD00AB483E /* ElevationPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D471E1CEA9AFD00AB483E /* ElevationPoint.swift */; };
-		F91D47621CEA9AFD00AB483E /* KreveldActiveBTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D471F1CEA9AFD00AB483E /* KreveldActiveBTree.swift */; };
-		F91D47631CEA9AFD00AB483E /* KreveldSweepEventNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47201CEA9AFD00AB483E /* KreveldSweepEventNode.swift */; };
-		F91D47641CEA9AFD00AB483E /* StatusEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47211CEA9AFD00AB483E /* StatusEntry.swift */; };
+		F91D47611CEA9AFD00AB483E /* VanKreveldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D471E1CEA9AFD00AB483E /* VanKreveldCell.swift */; };
+		F91D47621CEA9AFD00AB483E /* KreveldActiveBinaryTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D471F1CEA9AFD00AB483E /* KreveldActiveBinaryTree.swift */; };
+		F91D47631CEA9AFD00AB483E /* VanKreveldSweepEventNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47201CEA9AFD00AB483E /* VanKreveldSweepEventNode.swift */; };
+		F91D47641CEA9AFD00AB483E /* VanKreveldStatusEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47211CEA9AFD00AB483E /* VanKreveldStatusEntry.swift */; };
 		F91D47651CEA9AFD00AB483E /* VanKreveldViewshed.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47221CEA9AFD00AB483E /* VanKreveldViewshed.swift */; };
 		F91D47661CEA9AFD00AB483E /* ViewshedAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47231CEA9AFD00AB483E /* ViewshedAlgorithm.swift */; };
 		F91D47671CEA9AFD00AB483E /* ActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47251CEA9AFD00AB483E /* ActivityIndicator.swift */; };
@@ -82,7 +81,11 @@
 		F91D47711CEA9AFD00AB483E /* GridOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F91D47301CEA9AFD00AB483E /* GridOverlayView.swift */; };
 		F924C2001CF3B51E00905FBC /* HGTRegions.txt in Resources */ = {isa = PBXBuildFile; fileRef = F924C1FF1CF3B51E00905FBC /* HGTRegions.txt */; };
 		F924C2031CF3B82C00905FBC /* StreamReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F924C2021CF3B82C00905FBC /* StreamReader.swift */; };
+		F926E7591D10AE4F001AD367 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F926E7581D10AE4F001AD367 /* Images.xcassets */; };
 		F92D253D1CEFC55000C109AE /* ElevationTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = F92D253C1CEFC55000C109AE /* ElevationTool.swift */; };
+		F975408D1D09F989005E222E /* VanKreveldEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F975408C1D09F989005E222E /* VanKreveldEventType.swift */; };
+		F99D8C0A1D13594300DD754F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F99D8C081D13594300DD754F /* LaunchScreen.storyboard */; };
+		F9B9FD171D10A46100610CB1 /* FogMachine.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F9B9FD151D10A46100610CB1 /* FogMachine.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -104,15 +107,13 @@
 		E314F6BF1B79023D005B75C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E314F6C71B79023D005B75C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E314F6C91B79023D005B75C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		E314F6CC1B79023D005B75C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		E314F6D21B79023D005B75C6 /* FogViewshed.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FogViewshed.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E314F6D71B79023D005B75C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E314F6D81B79023D005B75C6 /* FogViewshedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FogViewshedTests.swift; sourceTree = "<group>"; };
-		F904248C1CC942330034AAC4 /* PeerKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; name = PeerKit.framework; path = "/Users/wiedemanns/Library/Developer/Xcode/DerivedData/FogMachine-ehakjtromnjnlkdndgtxzwnwrxhg/Build/Products/Debug-iphoneos/PeerKit.framework"; sourceTree = "<absolute>"; };
+		F913E2561D1869F30012A431 /* Pods_FogMachine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_FogMachine.framework; path = "../../../../../Library/Developer/Xcode/DerivedData/FogMachine-fhlmkgncpzqeezchvlnipwbdziia/Build/Products/Debug-iphoneos/Pods_FogMachine.framework"; sourceTree = "<group>"; };
 		F91D46DD1CEA9AED00AB483E /* FogViewshed-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FogViewshed-Bridging-Header.h"; sourceTree = "<group>"; };
 		F91D46DE1CEA9AED00AB483E /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F91D46DF1CEA9AED00AB483E /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		F91D46E31CEA9AFD00AB483E /* ConnectionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionsViewController.swift; sourceTree = "<group>"; };
 		F91D46E41CEA9AFD00AB483E /* DataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataViewController.swift; sourceTree = "<group>"; };
 		F91D46E51CEA9AFD00AB483E /* ObserverSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverSettingsViewController.swift; sourceTree = "<group>"; };
 		F91D46E61CEA9AFD00AB483E /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -160,10 +161,10 @@
 		F91D47191CEA9AFD00AB483E /* ViewshedTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewshedTool.swift; sourceTree = "<group>"; };
 		F91D471A1CEA9AFD00AB483E /* ViewshedWork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewshedWork.swift; sourceTree = "<group>"; };
 		F91D471C1CEA9AFD00AB483E /* FranklinRayViewshed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FranklinRayViewshed.swift; sourceTree = "<group>"; };
-		F91D471E1CEA9AFD00AB483E /* ElevationPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElevationPoint.swift; sourceTree = "<group>"; };
-		F91D471F1CEA9AFD00AB483E /* KreveldActiveBTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KreveldActiveBTree.swift; sourceTree = "<group>"; };
-		F91D47201CEA9AFD00AB483E /* KreveldSweepEventNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KreveldSweepEventNode.swift; sourceTree = "<group>"; };
-		F91D47211CEA9AFD00AB483E /* StatusEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusEntry.swift; sourceTree = "<group>"; };
+		F91D471E1CEA9AFD00AB483E /* VanKreveldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VanKreveldCell.swift; sourceTree = "<group>"; };
+		F91D471F1CEA9AFD00AB483E /* KreveldActiveBinaryTree.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KreveldActiveBinaryTree.swift; sourceTree = "<group>"; };
+		F91D47201CEA9AFD00AB483E /* VanKreveldSweepEventNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VanKreveldSweepEventNode.swift; sourceTree = "<group>"; };
+		F91D47211CEA9AFD00AB483E /* VanKreveldStatusEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VanKreveldStatusEntry.swift; sourceTree = "<group>"; };
 		F91D47221CEA9AFD00AB483E /* VanKreveldViewshed.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VanKreveldViewshed.swift; sourceTree = "<group>"; };
 		F91D47231CEA9AFD00AB483E /* ViewshedAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewshedAlgorithm.swift; sourceTree = "<group>"; };
 		F91D47251CEA9AFD00AB483E /* ActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityIndicator.swift; sourceTree = "<group>"; };
@@ -179,7 +180,11 @@
 		F91D47301CEA9AFD00AB483E /* GridOverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridOverlayView.swift; sourceTree = "<group>"; };
 		F924C1FF1CF3B51E00905FBC /* HGTRegions.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HGTRegions.txt; sourceTree = "<group>"; };
 		F924C2021CF3B82C00905FBC /* StreamReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StreamReader.swift; sourceTree = "<group>"; };
+		F926E7581D10AE4F001AD367 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = ../../FogMachine/FogMachine/Images.xcassets; sourceTree = "<group>"; };
 		F92D253C1CEFC55000C109AE /* ElevationTool.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ElevationTool.swift; sourceTree = "<group>"; };
+		F975408C1D09F989005E222E /* VanKreveldEventType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VanKreveldEventType.swift; sourceTree = "<group>"; };
+		F99D8C091D13594300DD754F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = FogViewshed/Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F9B9FD161D10A46100610CB1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = ../../FogMachine/FogMachine/en.lproj/FogMachine.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +192,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F913E2571D1869F30012A431 /* Pods_FogMachine.framework in Frameworks */,
 				9C087DEA9387C323CF6DAE62 /* Pods_FogViewshed.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -204,6 +210,7 @@
 		401D5B75ECC7ACCCF10B7514 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F913E2561D1869F30012A431 /* Pods_FogMachine.framework */,
 				23ACD3D789C87F8790B278E1 /* Pods_FogViewshed.framework */,
 			);
 			name = Frameworks;
@@ -221,7 +228,8 @@
 		E314F6B21B79023D005B75C6 = {
 			isa = PBXGroup;
 			children = (
-				F904248C1CC942330034AAC4 /* PeerKit.framework */,
+				F926E7581D10AE4F001AD367 /* Images.xcassets */,
+				F9B9FD151D10A46100610CB1 /* FogMachine.storyboard */,
 				E314F6BD1B79023D005B75C6 /* FogViewshed */,
 				E314F6D51B79023D005B75C6 /* FogViewshedTests */,
 				E314F6BC1B79023D005B75C6 /* Products */,
@@ -252,7 +260,7 @@
 				754175861C57C84B000D51E0 /* FogMachine.xcdatamodeld */,
 				E314F6C61B79023D005B75C6 /* Main.storyboard */,
 				E314F6C91B79023D005B75C6 /* Images.xcassets */,
-				E314F6CB1B79023D005B75C6 /* LaunchScreen.xib */,
+				F99D8C081D13594300DD754F /* LaunchScreen.storyboard */,
 				E314F6BE1B79023D005B75C6 /* Supporting Files */,
 				F91D46DD1CEA9AED00AB483E /* FogViewshed-Bridging-Header.h */,
 			);
@@ -287,7 +295,6 @@
 		F91D46E21CEA9AFD00AB483E /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				F91D46E31CEA9AFD00AB483E /* ConnectionsViewController.swift */,
 				F91D46E41CEA9AFD00AB483E /* DataViewController.swift */,
 				F91D46E51CEA9AFD00AB483E /* ObserverSettingsViewController.swift */,
 				F91D46E61CEA9AFD00AB483E /* SettingsViewController.swift */,
@@ -424,11 +431,12 @@
 		F91D471D1CEA9AFD00AB483E /* VanKreveld */ = {
 			isa = PBXGroup;
 			children = (
-				F91D471E1CEA9AFD00AB483E /* ElevationPoint.swift */,
-				F91D471F1CEA9AFD00AB483E /* KreveldActiveBTree.swift */,
-				F91D47201CEA9AFD00AB483E /* KreveldSweepEventNode.swift */,
-				F91D47211CEA9AFD00AB483E /* StatusEntry.swift */,
+				F91D471E1CEA9AFD00AB483E /* VanKreveldCell.swift */,
+				F91D471F1CEA9AFD00AB483E /* KreveldActiveBinaryTree.swift */,
+				F91D47201CEA9AFD00AB483E /* VanKreveldSweepEventNode.swift */,
+				F91D47211CEA9AFD00AB483E /* VanKreveldStatusEntry.swift */,
 				F91D47221CEA9AFD00AB483E /* VanKreveldViewshed.swift */,
+				F975408C1D09F989005E222E /* VanKreveldEventType.swift */,
 			);
 			path = VanKreveld;
 			sourceTree = "<group>";
@@ -553,11 +561,14 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F926E7591D10AE4F001AD367 /* Images.xcassets in Resources */,
+				F9B9FD171D10A46100610CB1 /* FogMachine.storyboard in Resources */,
 				F924C2001CF3B51E00905FBC /* HGTRegions.txt in Resources */,
 				F91D47451CEA9AFD00AB483E /* N37W122.hgt in Resources */,
 				E314F6C81B79023D005B75C6 /* Main.storyboard in Resources */,
 				F91D47411CEA9AFD00AB483E /* N34W119.hgt in Resources */,
 				F91D474A1CEA9AFD00AB483E /* N38W124.hgt in Resources */,
+				F99D8C0A1D13594300DD754F /* LaunchScreen.storyboard in Resources */,
 				F91D474E1CEA9AFD00AB483E /* N39W106.hgt in Resources */,
 				F91D47481CEA9AFD00AB483E /* N38W078.hgt in Resources */,
 				F91D47501CEA9AFD00AB483E /* N40W106.hgt in Resources */,
@@ -572,7 +583,6 @@
 				F91D474F1CEA9AFD00AB483E /* N40W105.hgt in Resources */,
 				F91D47441CEA9AFD00AB483E /* N37W078.hgt in Resources */,
 				F91D473C1CEA9AFD00AB483E /* N33W117.hgt in Resources */,
-				E314F6CD1B79023D005B75C6 /* LaunchScreen.xib in Resources */,
 				E314F6CA1B79023D005B75C6 /* Images.xcassets in Resources */,
 				F91D47511CEA9AFD00AB483E /* README.txt in Resources */,
 				F91D473F1CEA9AFD00AB483E /* N34W117.hgt in Resources */,
@@ -650,25 +660,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F91D47311CEA9AFD00AB483E /* ConnectionsViewController.swift in Sources */,
 				F91D476E1CEA9AFD00AB483E /* ImageUtility.swift in Sources */,
 				F91D476A1CEA9AFD00AB483E /* HGTDownloader.swift in Sources */,
 				F91D47531CEA9AFD00AB483E /* ObserverFacade.swift in Sources */,
 				F91D46E01CEA9AED00AB483E /* AppDelegate.swift in Sources */,
 				F91D47541CEA9AFD00AB483E /* AxisOrientedBoundingBox.swift in Sources */,
 				F91D47341CEA9AFD00AB483E /* SettingsViewController.swift in Sources */,
-				F91D47631CEA9AFD00AB483E /* KreveldSweepEventNode.swift in Sources */,
+				F91D47631CEA9AFD00AB483E /* VanKreveldSweepEventNode.swift in Sources */,
 				F91D47321CEA9AFD00AB483E /* DataViewController.swift in Sources */,
 				F91D47581CEA9AFD00AB483E /* Perimeter.swift in Sources */,
 				F91D476F1CEA9AFD00AB483E /* Pixel.swift in Sources */,
 				F91D47331CEA9AFD00AB483E /* ObserverSettingsViewController.swift in Sources */,
 				F91D476C1CEA9AFD00AB483E /* HGTRegions.swift in Sources */,
-				F91D47611CEA9AFD00AB483E /* ElevationPoint.swift in Sources */,
+				F91D47611CEA9AFD00AB483E /* VanKreveldCell.swift in Sources */,
 				F91D47571CEA9AFD00AB483E /* DataGrid.swift in Sources */,
 				F91D475D1CEA9AFD00AB483E /* ViewshedResult.swift in Sources */,
 				F91D47711CEA9AFD00AB483E /* GridOverlayView.swift in Sources */,
 				F91D47601CEA9AFD00AB483E /* FranklinRayViewshed.swift in Sources */,
-				F91D47641CEA9AFD00AB483E /* StatusEntry.swift in Sources */,
+				F91D47641CEA9AFD00AB483E /* VanKreveldStatusEntry.swift in Sources */,
 				F91D475C1CEA9AFD00AB483E /* Observer.swift in Sources */,
 				F91D47521CEA9AFD00AB483E /* ObserverEntity.swift in Sources */,
 				F91D47701CEA9AFD00AB483E /* GridOverlay.swift in Sources */,
@@ -681,12 +690,13 @@
 				F91D475F1CEA9AFD00AB483E /* ViewshedWork.swift in Sources */,
 				F91D47681CEA9AFD00AB483E /* BoundingBoxUtility.swift in Sources */,
 				F91D476D1CEA9AFD00AB483E /* Toast.swift in Sources */,
+				F975408D1D09F989005E222E /* VanKreveldEventType.swift in Sources */,
 				7575B3E21C5963C100FE32E9 /* FogMachine.xcdatamodeld in Sources */,
 				F91D476B1CEA9AFD00AB483E /* HGTManager.swift in Sources */,
 				F91D47661CEA9AFD00AB483E /* ViewshedAlgorithm.swift in Sources */,
 				F91D46E11CEA9AED00AB483E /* Constants.swift in Sources */,
 				F91D47691CEA9AFD00AB483E /* GeoUtility.swift in Sources */,
-				F91D47621CEA9AFD00AB483E /* KreveldActiveBTree.swift in Sources */,
+				F91D47621CEA9AFD00AB483E /* KreveldActiveBinaryTree.swift in Sources */,
 				F92D253D1CEFC55000C109AE /* ElevationTool.swift in Sources */,
 				F91D47551CEA9AFD00AB483E /* Sector.swift in Sources */,
 				F91D47561CEA9AFD00AB483E /* BresenhamsLineAlgoritm.swift in Sources */,
@@ -722,12 +732,21 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		E314F6CB1B79023D005B75C6 /* LaunchScreen.xib */ = {
+		F99D8C081D13594300DD754F /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				E314F6CC1B79023D005B75C6 /* Base */,
+				F99D8C091D13594300DD754F /* Base */,
 			);
-			name = LaunchScreen.xib;
+			name = LaunchScreen.storyboard;
+			path = ..;
+			sourceTree = "<group>";
+		};
+		F9B9FD151D10A46100610CB1 /* FogMachine.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F9B9FD161D10A46100610CB1 /* en */,
+			);
+			name = FogMachine.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -826,7 +845,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FogViewshed/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mil.nga.giat.FogViewshed;
 				PRODUCT_NAME = FogViewshed;
@@ -845,7 +864,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = FogViewshed/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = mil.nga.giat.FogViewshed;
 				PRODUCT_NAME = FogViewshed;

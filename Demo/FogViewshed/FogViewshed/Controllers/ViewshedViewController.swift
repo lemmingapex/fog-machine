@@ -10,8 +10,7 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     var model:ObserverFacade = ObserverFacade()
     // Only used for segue from ObserverSettings
     var settingsObserver:Observer = Observer()
-    var locationManager:CLLocationManager = CLLocationManager()
-    var isInitialAuthorizationCheck:Bool = false
+    let locationManager:CLLocationManager = CLLocationManager()
 
     // MARK: IBOutlets
 
@@ -24,10 +23,12 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         super.viewDidLoad()
 
         self.tabBarController!.delegate = self
-        mapView.delegate = self
+        self.mapView.showsUserLocation = true
+        self.mapView.tintColor = UIColor.blueColor()
+        self.mapView.delegate = self
         let onLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(ViewshedViewController.onLongPress(_:)))
         onLongPressGesture.minimumPressDuration = 0.2
-        mapView.addGestureRecognizer(onLongPressGesture)
+        self.mapView.addGestureRecognizer(onLongPressGesture)
 
         // TODO: What should happen when the viewshed is done?
         SwiftEventBus.onMainThread(self, name: ViewshedEventBusEvents.viewshedComplete) { result in
@@ -45,17 +46,19 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
             self.mapView.addOverlay(gridOverlay)
         }
 
+        SwiftEventBus.onMainThread(self, name: ViewshedEventBusEvents.addObserverPin) { result in
+            let observer:Observer = result.object as! Observer
+            self.addObserver(observer)
+        }
+
         self.locationManager.delegate = self
-        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        self.locationManager.startUpdatingLocation();
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         let status = CLLocationManager.authorizationStatus()
         if (status == .NotDetermined || status == .Denied || status == .Restricted)  {
-            // present an alert indicating location authorization required
-            // and offer to take the user to Settings for the app via
-            self.locationManager.requestWhenInUseAuthorization()
-            self.mapView.tintColor = UIColor.blueColor()
+            self.locationManager.requestAlwaysAuthorization()
+        } else {
+            self.locationManager.startUpdatingLocation()
         }
-        focusOnMyCurrentLocation()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -84,29 +87,24 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if (status == .AuthorizedWhenInUse || status == .AuthorizedAlways) {
             self.locationManager.startUpdatingLocation()
-            self.isInitialAuthorizationCheck = true
-            self.mapView.showsUserLocation = true
         }
     }
 
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if (self.isInitialAuthorizationCheck) {
-            let location = locations.last
-            let center = CLLocationCoordinate2D(latitude: location!.coordinate.latitude, longitude: location!.coordinate.longitude)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 5, longitudeDelta: 5))
-            self.mapView.tintColor = UIColor.blueColor()
-            self.mapView?.centerCoordinate = location!.coordinate
-            self.mapView.setRegion(region, animated: true)
-            self.locationManager.stopUpdatingLocation()
-        }
+        self.locationManager.stopUpdatingLocation()
+        // most recent is at the end
+        let location:CLLocation = locations.last!
+        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+        self.mapView?.centerCoordinate = location.coordinate
+        self.mapView.setRegion(region, animated: true)
     }
-
 
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         NSLog("Error: " + error.localizedDescription)
     }
 
-    func drawObservers() {
+    private func drawObservers() {
         mapView.removeAnnotations(mapView.annotations)
         
         for observer in model.getObservers() {
@@ -114,7 +112,7 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         }
     }
 
-    func drawDataRegions() {
+    private func drawDataRegions() {
         var dataRegionOverlays = [MKOverlay]()
         for overlay in mapView.overlays {
             if overlay is MKPolygon {
@@ -128,27 +126,31 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
         }
     }
 
-    func drawPin(observer: Observer) {
+    private func drawPin(observer: Observer) {
         let dropPin = MKPointAnnotation()
         dropPin.coordinate = observer.position
-        dropPin.title = observer.name
+        dropPin.title = observer.description
         mapView.addAnnotation(dropPin)
     }
     
     
-    func redraw() {
+    private func redraw() {
         drawObservers()
         drawDataRegions()
+    }
+    
+    private func addObserver(observer:Observer) {
+        if(model.add(observer)) {
+            drawPin(observer)
+        }
     }
 
     func onLongPress(gestureRecognizer: UIGestureRecognizer) {
         if (gestureRecognizer.state == UIGestureRecognizerState.Began) {
             if(HGTManager.getLocalHGTFileByName(HGTFile.coordinateToFilename(mapView.convertPoint(gestureRecognizer.locationInView(mapView), toCoordinateFromView: mapView), resolution: Srtm.SRTM3_RESOLUTION)) != nil) {
                 let newObserver = Observer()
-                newObserver.name = "Observer \(model.getObservers().count + 1)"
                 newObserver.position = mapView.convertPoint(gestureRecognizer.locationInView(mapView), toCoordinateFromView: mapView)
-                model.add(newObserver)
-                drawPin(newObserver)
+                addObserver(newObserver)
             } else {
                 var style = ToastStyle()
                 style.messageColor = UIColor.redColor()
@@ -279,15 +281,7 @@ class ViewshedViewController: UIViewController, MKMapViewDelegate, CLLocationMan
     }
 
     @IBAction func focusToCurrentLocation(sender: AnyObject) {
-        focusOnMyCurrentLocation()
-    }
-    
-    private func focusOnMyCurrentLocation() {
-        if let coordinate = mapView.userLocation.location?.coordinate {
-            let center = CLLocationCoordinate2D(latitude: coordinate.latitude, longitude: coordinate.longitude)
-            let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-            self.mapView.setRegion(region, animated: true)
-        }
+        self.locationManager.startUpdatingLocation()
     }
     
     // MARK: Segue

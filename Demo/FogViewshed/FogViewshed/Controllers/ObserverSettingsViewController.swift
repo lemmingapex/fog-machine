@@ -19,7 +19,6 @@ class ObserverSettingsViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var algorithm: UISegmentedControl!
-    @IBOutlet weak var name: UITextField!
     @IBOutlet weak var elevation: UITextField!
     @IBOutlet weak var radius: UITextField!
     @IBOutlet weak var latitude: UITextField!
@@ -76,8 +75,6 @@ class ObserverSettingsViewController: UIViewController, UITextFieldDelegate {
     
     func createObserverFromSettings() -> Observer {
         let editedObserver = Observer()
-        
-        editedObserver.name = name.text!
 
         let elevationValue = getDoubleValue("elevation", value: elevation.text, warningMessage: Warning.DECIMAL)
         let radiusValue = getDoubleValue("radius", value: radius.text, warningMessage: Warning.DECIMAL)
@@ -102,9 +99,8 @@ class ObserverSettingsViewController: UIViewController, UITextFieldDelegate {
         return doubleValue
     }
     
-    func loadObserverSettings() {
+    func loadObserverSettings() {        
         algorithm.selectedSegmentIndex = 0
-        name.text = originalObserver!.name
         elevation.text = String(originalObserver!.elevationInMeters)
         radius.text = String(originalObserver!.radiusInMeters)
         latitude.text = String(originalObserver!.position.latitude)

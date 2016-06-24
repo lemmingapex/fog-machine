@@ -26,6 +26,9 @@ public class ViewshedTool : FMTool {
     public override func processWork(node:FMNode, fromNode:FMNode, work: FMWork) -> ViewshedResult {
         let viewshedWork = work as! ViewshedWork
         
+        // draw the pin if it doesn't exist
+        SwiftEventBus.post(ViewshedEventBusEvents.addObserverPin, sender:viewshedWork.observer)
+        
         // make the sector
         let angleSize:Double = (2*M_PI)/Double(viewshedWork.sectorCount)
         let startAngle:Double = angleSize*Double(viewshedWork.sectorNumber)
@@ -59,8 +62,15 @@ public class ViewshedTool : FMTool {
         viewshedLog("Start running viewshed")
         let viewshedTimer:FMTimer = FMTimer()
         viewshedTimer.start()
-        let franklinRayViewshed:FranklinRayViewshed = FranklinRayViewshed(elevationDataGrid: elevationDataGrid, perimeter: perimeter, observer: viewshedWork.observer)
-        let viewshedDataGrid:DataGrid = franklinRayViewshed.runViewshed()
+        var viewsehdAlgorithm:ViewsehdAlgorithm
+        
+        if(viewshedWork.viewshedAlgorithmName == ViewshedAlgorithmName.VanKreveld) {
+            viewsehdAlgorithm = VanKreveldViewshed(elevationDataGrid: elevationDataGrid, observer: viewshedWork.observer)
+        } else {
+            viewsehdAlgorithm = FranklinRayViewshed(elevationDataGrid: elevationDataGrid, perimeter: perimeter, observer: viewshedWork.observer)
+        }
+        
+        let viewshedDataGrid:DataGrid = viewsehdAlgorithm.runViewshed()
         viewshedLog("Ran viewshed in " + String(format: "%.3f", viewshedTimer.stop()) + " seconds")
         
         // if this is not me
@@ -81,11 +91,11 @@ public class ViewshedTool : FMTool {
     }
     
     public override func onPeerConnect(myNode:FMNode, connectedNode:FMNode) {
-        SwiftEventBus.post(ViewshedEventBusEvents.onPeerConnect)
+        SwiftEventBus.post(FogMachineEventBusEvents.onPeerConnect)
     }
     
     public override func onPeerDisconnect(myNode:FMNode, disconnectedNode:FMNode) {
-        SwiftEventBus.post(ViewshedEventBusEvents.onPeerDisconnect)
+        SwiftEventBus.post(FogMachineEventBusEvents.onPeerDisconnect)
     }
     
     public func viewshedLog(format:String) {
