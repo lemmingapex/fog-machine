@@ -213,9 +213,25 @@ public class FogMachine {
 
     // used to time stuff
     private let executionTimer:FMTimer = FMTimer()
-
-    // how long should the initiator wait after completing it's work to start resechduling work
-    private let reprocessingScheduleWaitTimeInSeconds:Double = 5.0
+    
+    // the shortest time in seconds that FogMachine should wait before re-processing other nodes work.  The initiator will wait after completing it's work to start resechduling work.
+    private var minWaitTimeToStartReprocessingWorkInSeconds:Double = 8.0
+    
+    // the longest time in seconds that Fog Machine should wait before re-processing other nodes work.  The initiator will wait after completing it's work to start resechduling work.
+    private var maxWaitTimeToStartReprocessingWorkInSeconds:Double = 60.0*5.0
+    
+    /**
+     The shortest time in seconds that FogMachine should wait before re-processing other nodes work.  (The default is set to 8 seconds)  The initiator will wait after completing it's work to start resechduling work.  Unless strict is set to true, Fog Machine will wait a bit longer to start reprocessing work based on the performance of the nodes in the network.
+     
+     - parameter time:   the shortest time in seconds that FogMachine should wait before re-processing other nodes work.
+     - parameter strict: if true, the time provided as the first argument will be the exact time that re-processing the other nodes work begins.
+     */
+    public func setWaitTimeUntilStartReprocessingWork(time:Double, strict:Bool = false) {
+        minWaitTimeToStartReprocessingWorkInSeconds = max(time,0)
+        if(strict) {
+            maxWaitTimeToStartReprocessingWorkInSeconds = max(time,0)
+        }
+    }
 
     // all the data structures below are session dependant!
     // used to control concurrency.  It synchronizes many of the data structures below
@@ -242,7 +258,30 @@ public class FogMachine {
     public func execute() -> Void {
         // run on background thread
         dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
-            self.executeOnThread()
+            self.executeOnThread(self.getAllNodes())
+        }
+    }
+    
+    /**
+     Runs your FMTool on a subset of the nodes in the network.  Your app should call this or execute().
+     
+     - parameter onNodes: A subset of the nodes in your network that should run your tool.
+     */
+    public func execute(onNodes:[FMNode]) -> Void {
+        
+        // make sure the nodes your app passed in are actually still in the network
+        var nodesInNetwork:[FMNode] = []
+        for n in onNodes {
+            if(self.getAllNodes().contains(n)) {
+                nodesInNetwork.append(n)
+            } else {
+                FMLog("Network does not contain node \(n.description).  Excluding this node from execution.")
+            }
+        }
+        
+        // run on background thread
+        dispatch_async(dispatch_get_global_queue(QOS_CLASS_UTILITY, 0)) {
+            self.executeOnThread(nodesInNetwork)
         }
     }
 
@@ -251,7 +290,7 @@ public class FogMachine {
      Runs your FMTool.
      
      */
-    private func executeOnThread() -> Void {
+    private func executeOnThread(onNodes:[FMNode]) -> Void {
         // time how long the entire execution takes
         executionTimer.start()
 
@@ -264,7 +303,7 @@ public class FogMachine {
         nodeToResult[sessionUUID] = [FMNode:FMResult]()
         nodeToRoundTripTimer[sessionUUID] = [FMNode:FMTimer]()
 
-        for node in getAllNodes() {
+        for node in onNodes {
             mcPeerIDToNode[sessionUUID]![node.mcPeerID] = node
         }
 
@@ -337,25 +376,33 @@ public class FogMachine {
             }
         }
 
-        // process your own work
-        self.FMLog("Processing self work.")
-        dispatch_sync(self.lock) {
-            self.nodeToRoundTripTimer[sessionUUID]![self.getSelfNode()]?.start()
+        var selfResult:FMResult?
+        if(selfWork != nil) {
+            // process your own work
+            self.FMLog("Processing self work.")
+            dispatch_sync(self.lock) {
+                self.nodeToRoundTripTimer[sessionUUID]![self.getSelfNode()]?.start()
+            }
+        
+            selfResult = self.fmTool.processWork(getSelfNode(), fromNode: getSelfNode(), work: selfWork!)
         }
-        let selfResult:FMResult = self.fmTool.processWork(getSelfNode(), fromNode: getSelfNode(), work: selfWork!)
 
         // store the result and merge results if needed
         dispatch_sync(self.lock) {
-            let selfTimeToFinish:Double = (self.nodeToRoundTripTimer[sessionUUID]![self.getSelfNode()]?.stop())!
-            self.FMLog(self.getSelfNode().description + " process work time: " + String(format: "%.3f", selfTimeToFinish) + " seconds.")
-            self.FMLog("Storing self work result.")
-            self.nodeToResult[sessionUUID]![self.getSelfNode()] = selfResult
+            var selfTimeToFinish:Double = 0
+            if(selfResult != nil) {
+                selfTimeToFinish = (self.nodeToRoundTripTimer[sessionUUID]![self.getSelfNode()]?.stop())!
+                self.FMLog(self.getSelfNode().description + " process work time: " + String(format: "%.3f", selfTimeToFinish) + " seconds.")
+                self.FMLog("Storing self work result.")
+                self.nodeToResult[sessionUUID]![self.getSelfNode()] = selfResult!
+            }
             let status = self.finishAndMerge(self.getSelfNode(), sessionUUID: sessionUUID)
             // schedule the reprocessing stuff
             if(status == false) {
                 let data:[String:NSObject] = ["SessionID": sessionUUID, "SelfTimeToFinish":selfTimeToFinish]
                 dispatch_async(dispatch_get_main_queue()) {
-                    NSTimer.scheduledTimerWithTimeInterval(self.reprocessingScheduleWaitTimeInSeconds, target: self, selector: #selector(FogMachine.scheduleReprocessWork(_:)), userInfo: data, repeats: false)
+                    // wait the minTime before startinf to reprocess
+                    NSTimer.scheduledTimerWithTimeInterval(self.minWaitTimeToStartReprocessingWorkInSeconds, target: self, selector: #selector(FogMachine.scheduleReprocessWork(_:)), userInfo: data, repeats: false)
                 }
             }
         }
@@ -432,8 +479,8 @@ public class FogMachine {
                 let nodeCount:Int = self.nodeToRoundTripTimer[sessionUUID]!.count
                 let averageTimeToFinish:Double = totalTimeToFinish/Double(nodeCount)
 
-                // give peers 50% more time to finish that the current average time. min time to wait is 8 seconds. max time to wait is 5 minutes.
-                let waitTime:Double = min(max((averageTimeToFinish * 0.5) - self.reprocessingScheduleWaitTimeInSeconds, 8), 60*5)
+                // give peers 40% more time to finish that the current average time.
+                let waitTime:Double = min(max(((averageTimeToFinish * 1.4) - selfTimeToFinish) - self.minWaitTimeToStartReprocessingWorkInSeconds, 0), self.maxWaitTimeToStartReprocessingWorkInSeconds)
                 var i:Int = 0
                 for node in pendingNodes {
                     let work:FMWork = self.nodeToWork[sessionUUID]![node]!
